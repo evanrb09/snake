@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>sadface</title>
+</head>
+<body>
+  <h1>sadface notifier</h1>
+
+  <script>
+    Notification.requestPermission();
+
+    setInterval(() => {
+      if (Notification.permission !== "granted") return;
+
+      if (Math.random() < 0.01) { // 1 in 100 seconds
+        new Notification("😐", {
+          body: "sadface moment",
+          icon: "sadface.png"
+        });
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
