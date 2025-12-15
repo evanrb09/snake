@@ -2,24 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>sadface</title>
+  <title>chaos favicon</title>
+
+  <!-- default favicon -->
+  <link id="favicon" rel="icon" href="sadface.png">
 </head>
 <body>
-  <h1>sadface notifier</h1>
+
+  <h1>favicon chaos test</h1>
+  <p>Switch tabs, watch the icon lose its mind</p>
 
   <script>
-    Notification.requestPermission();
+    const images = [
+      "sadface.png",
+      "pointless.png",
+      "stuart.png",
+      "lucas.png"
+    ];
+
+    const favicon = document.getElementById("favicon");
 
     setInterval(() => {
-      if (Notification.permission !== "granted") return;
+      // pick random image
+      const randomIndex = Math.floor(Math.random() * images.length);
+      const img = images[randomIndex];
 
-      if (Math.random() < 0.01) { // 1 in 100 seconds
-        new Notification("😐", {
-          body: "sadface moment",
-          icon: "sadface.png"
-        });
-      }
-    }, 1000);
+      // create new link to prevent caching
+      const newLink = document.createElement('link');
+      newLink.rel = 'icon';
+      newLink.href = img + "?v=" + Date.now();
+      document.head.appendChild(newLink);
+
+      // remove old favicon links except the last one
+      const oldLinks = document.querySelectorAll('link[rel="icon"]');
+      oldLinks.forEach((l, index) => {
+        if(index < oldLinks.length - 1) l.remove();
+      });
+    }, 500); // flash speed in ms, change as needed
   </script>
+
 </body>
 </html>
+
